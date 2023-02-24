@@ -119,24 +119,6 @@ const getTeamMembers = {
 
 }
 
-
-// function getTeamMemberData(id) {
-//    return inquirer
-//     //ask user a set of questions and get responses
-//         .prompt(questions)
-//         .then((answers) => {
-//             answers.id = id
-//             if (!answers.addingMoreMembers) {
-//                 return answers;
-                
-//               } else {
-
-//                 return getTeamMemberData(id++);
-//               }
-//         });
-
-// }
-
 // function call to initialize program
 getTeamMembers.welcomeMsg;
 getTeamMembers.data(id);
