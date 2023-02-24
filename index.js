@@ -46,6 +46,16 @@ const questions = [
         type: 'input',
         message: "What is their Email Address?",
         name: 'email',
+        validate: function(email)
+        {
+            // Regex mail check (return true if valid mail)
+            if(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+                return true;
+            } else {
+                return "please enter a valid email address";
+                
+            }
+        },
         when: (answers) => answers.type != 'Finish building the team'
     },
     {
