@@ -86,7 +86,7 @@ const getTeamMembers = {
                  if (answers.type === 'Finish building the team') {
                     this.createTeamMember(answers.type, answers);
                     console.log(this.allMembers)
-                    return answers;
+                    return true;
                    } else {
                     console.log(
                         `\n----------------------
@@ -106,10 +106,10 @@ const getTeamMembers = {
         if(type === 'Manager'){
             teamMember = new Manager(data.name, data.id, data.email, data.number);
         }
-        if(type === 'Intern'){
+        if(type === 'Add Intern'){
             teamMember = new Intern(data.name, data.id, data.email, data.school);
         }
-        if(type === 'Engineer'){
+        if(type === 'Add Engineer'){
             teamMember = new Engineer(data.name, data.id, data.email, data.github);
         }
 
@@ -124,4 +124,6 @@ const getTeamMembers = {
 
 // function call to initialize program
 getTeamMembers.welcomeMsg;
-getTeamMembers.data();
+if(getTeamMembers.data()){
+    console.log('yay');
+}
