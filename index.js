@@ -38,13 +38,13 @@ const questions = [
     },
     {
         type: 'input',
-        message: "What is their ID",
+        message: "What is their ID?",
         name: 'id',
         when:  (answers) => answers.type != 'Finish building the team'
     },
     {
         type: 'input',
-        message: "What is their Email Address",
+        message: "What is their Email Address?",
         name: 'email',
         when:  (answers) => answers.type != 'Finish building the team'
     },
