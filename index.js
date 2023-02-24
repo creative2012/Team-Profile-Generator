@@ -22,31 +22,31 @@ const questions = [
         message: "Choose an option:",
         name: 'type',
         choices: ['Add Intern', 'Add Engineer', 'Finish building the team'],
-        when:  () => runType != 1 
+        when: () => runType != 1
     },
     {
         type: 'input',
         message: "What is their name?",
         name: 'name',
-        when:  (answers) => runType != 1  && answers.type != 'Finish building the team'
+        when: (answers) => runType != 1 && answers.type != 'Finish building the team'
     },
     {
         type: 'input',
         message: "What is the Managers name?",
         name: 'name',
-        when:  () => runType === 1  
+        when: () => runType === 1
     },
     {
         type: 'input',
         message: "What is their ID?",
         name: 'id',
-        when:  (answers) => answers.type != 'Finish building the team'
+        when: (answers) => answers.type != 'Finish building the team'
     },
     {
         type: 'input',
         message: "What is their Email Address?",
         name: 'email',
-        when:  (answers) => answers.type != 'Finish building the team'
+        when: (answers) => answers.type != 'Finish building the team'
     },
     {
         type: 'input',
@@ -64,11 +64,11 @@ const questions = [
         type: 'input',
         message: "What is their office number?",
         name: 'number',
-        when:  () => runType === 1
+        when: () => runType === 1
     },
 
 ];
-const getTeamMembers = {
+const  getTeamMembers = {
 
     welcomeMsg: console.log(
         `\n----------------------
@@ -77,53 +77,50 @@ const getTeamMembers = {
     allMembers: [],
     data() {
         return inquirer
-         //ask user a set of questions and get responses
-             .prompt(questions)
-             .then((answers) => {
-                if(runType === 1){
+            //ask user a set of questions and get responses
+            .prompt(questions)
+            .then((answers) => {
+                if (runType === 1) {
                     answers.type = 'Manager';
                 }
-                 if (answers.type === 'Finish building the team') {
+                if (answers.type === 'Finish building the team') {
                     this.createTeamMember(answers.type, answers);
-                    console.log(this.allMembers)
-                    return true;
-                   } else {
+                    console.log(this.allMembers);
+                } else {
                     console.log(
                         `\n----------------------
                         \nTeam Menu
                         \n----------------------\n`);
-                    runType = 2; 
+                    runType = 2;
                     this.createTeamMember(answers.type, answers);
                     return this.data();
-                   }
-             });
-     
-     },
-     createTeamMember(type, data){
+                }
+            });
+
+    },
+    createTeamMember(type, data) {
 
         let teamMember = false;
 
-        if(type === 'Manager'){
+        if (type === 'Manager') {
             teamMember = new Manager(data.name, data.id, data.email, data.number);
         }
-        if(type === 'Add Intern'){
+        if (type === 'Add Intern') {
             teamMember = new Intern(data.name, data.id, data.email, data.school);
         }
-        if(type === 'Add Engineer'){
+        if (type === 'Add Engineer') {
             teamMember = new Engineer(data.name, data.id, data.email, data.github);
         }
 
-        if(teamMember){
+        if (teamMember) {
             this.allMembers.push(teamMember);
         }
-        
 
-     }
+
+    }
 
 }
 
 // function call to initialize program
 getTeamMembers.welcomeMsg;
-if(getTeamMembers.data()){
-    console.log('yay');
-}
+getTeamMembers.data();
