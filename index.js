@@ -46,14 +46,13 @@ const questions = [
         type: 'input',
         message: "What is their Email Address?",
         name: 'email',
-        validate: (email) =>
-        {
+        validate: (email) => {
             // Regex mail check (return true if valid mail)
-            if(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+            if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
                 return true;
             } else {
                 return 'please enter a valid email address';
-                
+
             }
         },
         when: (answers) => answers.type != 'Finish building the team'
@@ -74,49 +73,21 @@ const questions = [
         type: 'input',
         message: "What is their office number?",
         name: 'number',
-        validate: (number) =>  
-        {
-            if(isNaN(number) || number.toString().length < 11){
+        validate: (number) => {
+            if (isNaN(number) || number.toString().length < 11) {
                 return 'Please enter a valid phone number';
-             }else{
+            } else {
                 return true;
-             }
+            }
 
         },
         when: () => runType === 1
     },
 
 ];
-const  getTeamMembers = {
+const teamMembers = {
 
-    welcomeMsg: console.log(
-        `\n----------------------
-        \nLets Build your Team!
-        \n----------------------\n`),
-    allMembers: [],
-    data() {
-        return inquirer
-            //ask user a set of questions and get responses
-            .prompt(questions)
-            .then((answers) => {
-                if (runType === 1) {
-                    answers.type = 'Manager';
-                }
-                if (answers.type === 'Finish building the team') {
-                    this.createTeamMember(answers.type, answers);
-                    console.log(this.allMembers);
-                } else {
-                    console.log(
-                        `\n----------------------
-                        \nTeam Menu
-                        \n----------------------\n`);
-                    runType = 2;
-                    this.createTeamMember(answers.type, answers);
-                    return this.data();
-                }
-            });
-
-    },
+    data: [],
     createTeamMember(type, data) {
 
         let teamMember = false;
@@ -132,14 +103,51 @@ const  getTeamMembers = {
         }
 
         if (teamMember) {
-            this.allMembers.push(teamMember);
+            this.data.push(teamMember);
         }
 
 
     }
 
 }
+function promptUser() {
+    //ask user a set of questions and get responses
+    return inquirer.prompt(questions).then((answers) => {
+        if (runType === 1) {
+            answers.type = 'Manager';
+        }
+        if (answers.type === 'Finish building the team') {
+            teamMembers.createTeamMember(answers.type, answers);
+            return true;
+        } else {
+            console.log(
+                `\n----------------------
+                \nTeam Menu
+                \n----------------------\n`);
+            runType = 2;
+            teamMembers.createTeamMember(answers.type, answers);
+            return promptUser();
+        }
+    });
+}
 
 // function call to initialize program
-getTeamMembers.welcomeMsg;
-getTeamMembers.data();
+console.log(
+    `\n----------------------
+    \nLets Build your Team!
+    \n----------------------\n`),
+    promptUser().then((complete) => {
+        if (complete) {
+            let html = render(teamMembers.data);
+            //write readme file
+            fs.writeFile(outputPath, html, err => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    //alert all went well
+                    console.log(`Your Page has Been Created`);
+                }
+            });
+
+        }
+    });
