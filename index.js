@@ -46,13 +46,13 @@ const questions = [
         type: 'input',
         message: "What is their Email Address?",
         name: 'email',
-        validate: function(email)
+        validate: (email) =>
         {
             // Regex mail check (return true if valid mail)
             if(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
                 return true;
             } else {
-                return "please enter a valid email address";
+                return 'please enter a valid email address';
                 
             }
         },
@@ -74,6 +74,15 @@ const questions = [
         type: 'input',
         message: "What is their office number?",
         name: 'number',
+        validate: (number) =>  
+        {
+            if(isNaN(number) || number.toString().length < 11){
+                return 'Please enter a valid phone number';
+             }else{
+                return true;
+             }
+
+        },
         when: () => runType === 1
     },
 
