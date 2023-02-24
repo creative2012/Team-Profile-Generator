@@ -120,12 +120,12 @@ function promptUser() {
             teamMembers.createTeamMember(answers.type, answers);
             return true;
         } else {
+            runType === 1 ?  runType = 2 : '';
+            teamMembers.createTeamMember(answers.type, answers);
             console.log(
                 `\n----------------------
                 \nTeam Menu
                 \n----------------------\n`);
-            runType = 2;
-            teamMembers.createTeamMember(answers.type, answers);
             return promptUser();
         }
     });
