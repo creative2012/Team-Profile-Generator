@@ -131,23 +131,26 @@ function promptUser() {
     });
 }
 
-// function call to initialize program
-console.log(
-    `\n----------------------
+function init() {
+    console.log(
+        `\n----------------------
     \nLets Build your Team!
     \n----------------------\n`),
-    promptUser().then((complete) => {
-        if (complete) {
-            let html = render(teamMembers.data);
-            //write readme file
-            fs.writeFile(outputPath, html, err => {
-                if (err) {
-                    console.error(err);
-                } else {
-                    //alert all went well
-                    console.log(`Your Page has Been Created`);
-                }
-            });
+        promptUser().then((complete) => {
+            if (complete) {
+                let html = render(teamMembers.data);
+                //write html file
+                fs.writeFile(outputPath, html, err => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        //alert all went well
+                        console.log(`Your Page has Been Created`);
+                    }
+                });
 
-        }
-    });
+            }
+        });
+}
+// function call to initialize program
+init();
