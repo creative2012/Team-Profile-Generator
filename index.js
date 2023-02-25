@@ -29,7 +29,7 @@ const questions = [
         name: 'name',
         validate: (name) => {
             //check user has input something
-            if(name.toString().length < 1){
+            if (name.toString().length < 1) {
                 return 'Please enter a value';
             } return true;
         },
@@ -41,7 +41,7 @@ const questions = [
         name: 'name',
         validate: (name) => {
             //check user has input something
-            if(name.toString().length < 1){
+            if (name.toString().length < 1) {
                 return 'Please enter a value';
             } return true;
         },
@@ -54,7 +54,7 @@ const questions = [
         name: 'id',
         validate: (id) => {
             //check user has input something
-            if(id.toString().length < 1){
+            if (id.toString().length < 1) {
                 return 'Please enter a value';
             } return true;
         },
@@ -79,7 +79,7 @@ const questions = [
         name: 'school',
         validate: (school) => {
             //check user has input something
-            if(school.toString().length < 1){
+            if (school.toString().length < 1) {
                 return 'Please enter a value';
             } return true;
         },
@@ -91,7 +91,7 @@ const questions = [
         name: 'github',
         validate: (github) => {
             //check user has input something
-            if(github.toString().length < 1){
+            if (github.toString().length < 1) {
                 return 'Please enter a value';
             } return true;
         },
@@ -118,17 +118,18 @@ const teamMembers = {
 
     data: [],
     createTeamMember(type, data) {
+        const { name, id, email } = data;
 
         let teamMember = false;
 
         if (type === 'Manager') {
-            teamMember = new Manager(data.name, data.id, data.email, data.number);
+            teamMember = new Manager(name, id, email, data.number);
         }
         if (type === 'Add Intern') {
-            teamMember = new Intern(data.name, data.id, data.email, data.school);
+            teamMember = new Intern(name, id, email, data.school);
         }
         if (type === 'Add Engineer') {
-            teamMember = new Engineer(data.name, data.id, data.email, data.github);
+            teamMember = new Engineer(name, id, email, data.github);
         }
         // if team member class object has been created, store it
         if (teamMember) {
@@ -154,19 +155,19 @@ function promptUser() {
             //prompt for other team members to add
         } else {
             //if first run complete change to 2, to disable manager only questions
-            runType === 1 ?  runType = 2 : '';
+            runType === 1 ? runType = 2 : '';
             teamMembers.createTeamMember(answers.type, answers);
             console.log(
                 `\n----------------------
                 \nTeam Menu
                 \n----------------------\n`);
-                //recursivly re-run questions to add other team members
+            //recursivly re-run questions to add other team members
             return promptUser();
         }
     });
 }
 //function to generate html page
-function generateHtmlPage(){
+function generateHtmlPage() {
     //render page
     let html = render(teamMembers.data);
     //write html file
@@ -188,7 +189,7 @@ function init() {
         `\n----------------------
     \nLets Build your Team!
     \n----------------------\n`),
-    //run prompt user function, and call function to write html page when complete
+        //run prompt user function, and call function to write html page when complete
         promptUser().then((complete) => {
             if (complete) {
                 generateHtmlPage();
