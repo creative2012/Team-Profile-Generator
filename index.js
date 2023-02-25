@@ -165,6 +165,19 @@ function promptUser() {
         }
     });
 }
+//function to generate html page
+function generateHtmlPage(html){
+    //write html file
+    fs.writeFile(outputPath, html, err => {
+        if (err) {
+            console.error(err);
+        } else {
+            //alert all went well
+            console.log(`Your Page has Been Created`);
+        }
+    });
+
+}
 
 //function to initiate the program
 function init() {
@@ -173,20 +186,11 @@ function init() {
         `\n----------------------
     \nLets Build your Team!
     \n----------------------\n`),
-    //run prompt user function, and write html file
+    //run prompt user function, and call function to write html page when complete
         promptUser().then((complete) => {
             if (complete) {
                 let html = render(teamMembers.data);
-                //write html file
-                fs.writeFile(outputPath, html, err => {
-                    if (err) {
-                        console.error(err);
-                    } else {
-                        //alert all went well
-                        console.log(`Your Page has Been Created`);
-                    }
-                });
-
+                generateHtmlPage(html);
             }
         });
 }
