@@ -1,0 +1,27 @@
+.card{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    min-width: 320px;
+}
+
+.jumbotron{
+    background-color: rgb(49, 49, 49);
+    color: white;
+}
+/* manager */
+.red{
+    background-color: rgb(199, 91, 91);
+    color: white;
+
+}
+/* engineers */
+.yellow{
+    background-color: rgb(197, 199, 91);
+    color: white;
+
+}
+/* interns */
+.blue{
+    background-color: rgb(91, 91, 199);
+    color: white;
+
+}

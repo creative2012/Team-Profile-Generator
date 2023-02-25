@@ -97,7 +97,7 @@ const questions = [
         message: "What is their office number?",
         name: 'number',
         validate: (number) => {
-            if (isNaN(number) || number.toString().length < 11) {
+            if (isNaN(number) || number.toString().length < 11 || number.toString().length > 11) {
                 return 'Please enter a valid phone number';
             } return true;
 
