@@ -27,7 +27,7 @@ Clone the repository to your computer using "git clone" and then follow the belo
 ## Usage
 Run “node index.js” in your terminal and follow the prompts. At the end, your team HTML file will be stored in the "output" directory.
 
-The Following images shows a mock-up of the generated HTML, feel free to add your own css styles to the style.css file located in the "output" directory.
+The Following image shows a mock-up of the generated HTML, feel free to add your own css styles to the style.css file located in the "output" directory.
 
 ![applicaton mock up](./images/image.png)
 
