@@ -166,7 +166,9 @@ function promptUser() {
     });
 }
 //function to generate html page
-function generateHtmlPage(html){
+function generateHtmlPage(){
+    //render page
+    let html = render(teamMembers.data);
     //write html file
     fs.writeFile(outputPath, html, err => {
         if (err) {
@@ -189,8 +191,7 @@ function init() {
     //run prompt user function, and call function to write html page when complete
         promptUser().then((complete) => {
             if (complete) {
-                let html = render(teamMembers.data);
-                generateHtmlPage(html);
+                generateHtmlPage();
             }
         });
 }
