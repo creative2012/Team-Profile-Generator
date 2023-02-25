@@ -28,18 +28,33 @@ const questions = [
         type: 'input',
         message: "What is their name?",
         name: 'name',
+        validate: (name) => {
+            if(name.toString().length < 1){
+                return 'Please enter a value';
+            } return true;
+        },
         when: (answers) => runType != 1 && answers.type != 'Finish building the team'
     },
     {
         type: 'input',
         message: "What is the Managers name?",
         name: 'name',
+        validate: (name) => {
+            if(name.toString().length < 1){
+                return 'Please enter a value';
+            } return true;
+        },
         when: () => runType === 1
     },
     {
         type: 'input',
         message: "What is their ID?",
         name: 'id',
+        validate: (id) => {
+            if(id.toString().length < 1){
+                return 'Please enter a value';
+            } return true;
+        },
         when: (answers) => answers.type != 'Finish building the team'
     },
     {
@@ -50,10 +65,8 @@ const questions = [
             // Regex mail check (return true if valid mail)
             if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
                 return true;
-            } else {
-                return 'please enter a valid email address';
+            } return 'please enter a valid email address';
 
-            }
         },
         when: (answers) => answers.type != 'Finish building the team'
     },
@@ -61,12 +74,22 @@ const questions = [
         type: 'input',
         message: "What school did they attend?",
         name: 'school',
+        validate: (school) => {
+            if(school.toString().length < 1){
+                return 'Please enter a value';
+            } return true;
+        },
         when: (answers) => answers.type === 'Add Intern'
     },
     {
         type: 'input',
         message: "What is their github user name?",
         name: 'github',
+        validate: (github) => {
+            if(github.toString().length < 1){
+                return 'Please enter a value';
+            } return true;
+        },
         when: (answers) => answers.type === 'Add Engineer'
     },
     {
@@ -76,9 +99,7 @@ const questions = [
         validate: (number) => {
             if (isNaN(number) || number.toString().length < 11) {
                 return 'Please enter a valid phone number';
-            } else {
-                return true;
-            }
+            } return true;
 
         },
         when: () => runType === 1
