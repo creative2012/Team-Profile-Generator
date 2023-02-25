@@ -10,11 +10,10 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 
-//intial runType of 1 allows the user to select a manager for the team,
+//Program first run runType of 1 allows the user to select a manager for the team,
 //after inital run the runType will change to 2 and allow the user to add other team member types
 let runType = 1;
 
-// TODO: Write Code to gather information about the development team members, and render the HTML file.
 // array of questions for user
 const questions = [
     {
@@ -29,6 +28,7 @@ const questions = [
         message: "What is their name?",
         name: 'name',
         validate: (name) => {
+            //check user has input something
             if(name.toString().length < 1){
                 return 'Please enter a value';
             } return true;
@@ -40,10 +40,12 @@ const questions = [
         message: "What is the Managers name?",
         name: 'name',
         validate: (name) => {
+            //check user has input something
             if(name.toString().length < 1){
                 return 'Please enter a value';
             } return true;
         },
+        //display on first run only
         when: () => runType === 1
     },
     {
@@ -51,6 +53,7 @@ const questions = [
         message: "What is their ID?",
         name: 'id',
         validate: (id) => {
+            //check user has input something
             if(id.toString().length < 1){
                 return 'Please enter a value';
             } return true;
@@ -75,6 +78,7 @@ const questions = [
         message: "What school did they attend?",
         name: 'school',
         validate: (school) => {
+            //check user has input something
             if(school.toString().length < 1){
                 return 'Please enter a value';
             } return true;
@@ -86,6 +90,7 @@ const questions = [
         message: "What is their github user name?",
         name: 'github',
         validate: (github) => {
+            //check user has input something
             if(github.toString().length < 1){
                 return 'Please enter a value';
             } return true;
@@ -97,15 +102,18 @@ const questions = [
         message: "What is their office number?",
         name: 'number',
         validate: (number) => {
+            //check user has input numbers only and length is not less than or greater than 11
             if (isNaN(number) || number.toString().length < 11 || number.toString().length > 11) {
                 return 'Please enter a valid phone number';
             } return true;
 
         },
+        //display on first run only
         when: () => runType === 1
     },
 
 ];
+//object to hold create and store team member class objects
 const teamMembers = {
 
     data: [],
@@ -122,7 +130,7 @@ const teamMembers = {
         if (type === 'Add Engineer') {
             teamMember = new Engineer(data.name, data.id, data.email, data.github);
         }
-
+        // if team member class object has been created, store it
         if (teamMember) {
             this.data.push(teamMember);
         }
@@ -131,32 +139,41 @@ const teamMembers = {
     }
 
 }
+//function to promp user questions
 function promptUser() {
     //ask user a set of questions and get responses
     return inquirer.prompt(questions).then((answers) => {
+        //if first run, assign as manager
         if (runType === 1) {
             answers.type = 'Manager';
         }
+        //if user is finnished, exit questions
         if (answers.type === 'Finish building the team') {
             teamMembers.createTeamMember(answers.type, answers);
             return true;
+            //prompt for other team members to add
         } else {
+            //if first run complete change to 2, to disable manager only questions
             runType === 1 ?  runType = 2 : '';
             teamMembers.createTeamMember(answers.type, answers);
             console.log(
                 `\n----------------------
                 \nTeam Menu
                 \n----------------------\n`);
+                //recursivly re-run questions to add other team members
             return promptUser();
         }
     });
 }
 
+//function to initiate the program
 function init() {
+    //welcome message
     console.log(
         `\n----------------------
     \nLets Build your Team!
     \n----------------------\n`),
+    //run prompt user function, and write html file
         promptUser().then((complete) => {
             if (complete) {
                 let html = render(teamMembers.data);
